@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, ActivityIndicator, Text } from "react-native";
+import { View, TextInput, ActivityIndicator, Text, Keyboard } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -25,7 +25,10 @@ export default class SignInForm extends Component {
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values, actions) => {}}
+        onSubmit={(values, actions) => {
+          Keyboard.dismiss()
+          this.props.onSubmit(values);
+        }}
         validationSchema={validationSchema}
       >
         {formikProps => (
@@ -52,21 +55,23 @@ export default class SignInForm extends Component {
             <Text style={styles.errorText}>
               {formikProps.touched.password && formikProps.errors.password}
             </Text>
-            <Button
-              icon={{
-                name: "arrow-right",
-                size: 15,
-                color: "blue",
-              }}
-              title="Submit"
-              type="outline"
-              onPress={formikProps.handleSubmit}
-            />
-            <Button
-              style={{ marginTop: 20 }}
-              title="Submit"
-              onPress={formikProps.handleSubmit}
-            />
+
+            {this.props.isSubmiting ? (
+              <View style={styles.indicatorContainer}>
+                <ActivityIndicator />
+              </View>
+            ) : (
+              <Button
+                containerStyle={{
+                  width: "100%",
+                  paddingHorizontal: 20,
+                  marginTop: 15,
+                }}
+                title="Sign In"
+                type="outline"
+                onPress={formikProps.handleSubmit}
+              />
+            )}
           </View>
         )}
       </Formik>

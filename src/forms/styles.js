@@ -20,5 +20,9 @@ export default styles = StyleSheet.create({
     errorText: {
         fontSize: 12,
         color: 'red',
+    },
+    indicatorContainer: {
+        width: '100%',
+        marginTop: 15,
     }
 })
