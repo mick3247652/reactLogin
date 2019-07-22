@@ -35,7 +35,7 @@ const MainStack = createSwitchNavigator(
     },
   },
   {
-    initialRouteName: "Splash",
+    initialRouteName: "SignIn",
     navigationOptions: {
       headerTintColor: "#a41034",
       headerStyle: {
