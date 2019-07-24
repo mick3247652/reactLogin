@@ -1,16 +1,12 @@
-import React, {Component} from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Button,
-  ActivityIndicator,
-  Text,
-} from "react-native";
+import React, { Component } from "react";
+import { View, TextInput, ActivityIndicator, Text, Keyboard } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
-import styles from './styles'
+import styles from "./styles";
+
+import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -22,35 +18,31 @@ const validationSchema = yup.object().shape({
     .string()
     .label("Password")
     .required()
-    .min(2, "Seems a bit short...")
-    .max(10, "We prefer insecure system, try a shorter password."),
+    .min(2)
+    .max(10),
 });
 
 export default class SignUpForm extends Component {
-
   render() {
     return (
       <Formik
-        initialValues={{ name: "" }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={(values, actions) => {
-          console.log(JSON.stringify(values));
-          setTimeout(() => {
-            actions.setSubmitting(false);
-          }, 1000);
+          Keyboard.dismiss()
+          this.props.onSubmit(values);
         }}
         validationSchema={validationSchema}
       >
         {formikProps => (
-          <React.Fragment>
+          <View style={styles.container}>
             <Text style={{ marginBottom: 3 }}>Email</Text>
             <TextInput
               placeholder="name@example.com"
               style={styles.textInput}
               onChangeText={formikProps.handleChange("email")}
               onBlur={formikProps.handleBlur("email")}
-              autoFocus
             />
-            <Text style={{ color: "red" }}>
+            <Text style={styles.errorText}>
               {formikProps.touched.email && formikProps.errors.email}
             </Text>
 
@@ -62,19 +54,29 @@ export default class SignUpForm extends Component {
               onBlur={formikProps.handleBlur("password")}
               secureTextEntry
             />
-            <Text style={{ color: "red" }}>
+            <Text style={styles.errorText}>
               {formikProps.touched.password && formikProps.errors.password}
             </Text>
 
-            {formikProps.isSubmitting ? (
-              <ActivityIndicator />
+            {this.props.isSubmiting ? (
+              <View style={styles.indicatorContainer}>
+                <ActivityIndicator />
+              </View>
             ) : (
-              <Button title="Submit" onPress={formikProps.handleSubmit} />
+              <Button
+                containerStyle={{
+                  width: "100%",
+                  paddingHorizontal: 20,
+                  marginTop: 15,
+                }}
+                title="Sign In"
+                type="outline"
+                onPress={formikProps.handleSubmit}
+              />
             )}
-          </React.Fragment>
+          </View>
         )}
       </Formik>
     );
   }
 }
-

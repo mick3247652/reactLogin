@@ -6,6 +6,9 @@ import SignUpScreen from "./screens/SignUp";
 import UserProfileScreen from "./screens/UserProfile";
 
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
 
 const MainStack = createSwitchNavigator(
   {
@@ -30,12 +33,12 @@ const MainStack = createSwitchNavigator(
     UserProfile: {
       screen: UserProfileScreen,
       navigationOptions: {
-        headerTitle: 'User Profile',
+        headerTitle: "User Profile",
       },
     },
   },
   {
-    initialRouteName: "SignIn",
+    initialRouteName: "Splash",
     navigationOptions: {
       headerTintColor: "#a41034",
       headerStyle: {
@@ -47,4 +50,10 @@ const MainStack = createSwitchNavigator(
 
 const App = createAppContainer(MainStack);
 
-export default () => <App />;
+export default () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>
+);

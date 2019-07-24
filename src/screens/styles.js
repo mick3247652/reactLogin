@@ -17,5 +17,12 @@ export default (styles = StyleSheet.create({
   },
   headerText: {
       fontSize: 20,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
+    width: '100%',
+    textAlign: 'center',
   }
 }));
