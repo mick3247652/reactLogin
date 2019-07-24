@@ -7,6 +7,7 @@ import styles from "./styles";
 import SignInForm from "../forms/SignInForm";
 import { connect } from "react-redux";
 import { actionSetToken } from "../redux/actions";
+import {authenticate} from "../api/user"
 
 class SignIn extends Component {
   state = {
@@ -20,35 +21,16 @@ class SignIn extends Component {
   };
 
   _getToken = async (email, password) => {
-    console.log(`get token with email:${email} password:${password}`);
     try {
-      const response = await fetch(
-        "http://192.168.1.46:3001/api/authenticate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
-      console.log("данные получены");
-      const json = await response.json();
-      console.log(json);
-      if (json.error) throw json.error;
-      await this.props.dispatch(actionSetToken(json.token));
+      const token = await authenticate(email, password)
+      await this.props.dispatch(actionSetToken(token));
       this.props.navigation.navigate("UserProfile");
     } catch (err) {
-      console.log(err);
       this.setState({ isSubmiting: false, isError: true, err });
     }
   };
 
   _onSubmitForm = values => {
-    console.log("Submit Form");
     this.setState({ isSubmiting: true });
     this._getToken(values.email, values.password);
   };

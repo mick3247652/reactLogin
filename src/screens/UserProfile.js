@@ -5,6 +5,7 @@ import { View, Text, TouchableHighlight } from "react-native";
 import styles from "./styles";
 import { connect } from "react-redux";
 import { actionSetToken, actionSetUserProfile } from "../redux/actions";
+import {getUserProfile} from '../api/user'
 
 class UserProfile extends Component {
   state = {
@@ -19,22 +20,9 @@ class UserProfile extends Component {
 
   _getUserProfile = async () => {
     try {
-      const response = await fetch(
-        "http://192.168.1.46:3001/api/getUserProfile",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-token": this.props.token,
-          },
-        }
-      );
-      console.log("данные получены (UserProfile)");
-      const json = await response.json();
-      if (json.error) throw json.error;
+      const json = await getUserProfile(this.props.token)
       await this.props.dispatch(actionSetUserProfile(json));
     } catch (err) {
-      console.log(err);
       this.setState({ isError: true, err });
     }
   };

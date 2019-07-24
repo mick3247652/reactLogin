@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableHighlight } from "react-native";
 import styles from "./styles";
 import { connect } from "react-redux";
-
+import SplashScreen from 'react-native-splash-screen';
 
 class Splash extends Component {
   _navigateToSignIn = () => {
@@ -40,6 +40,7 @@ class Splash extends Component {
   };
 
   componentWillMount(){
+    SplashScreen.hide()
     this._gotoNext()
   }
 

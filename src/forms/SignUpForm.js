@@ -69,7 +69,7 @@ export default class SignUpForm extends Component {
                   paddingHorizontal: 20,
                   marginTop: 15,
                 }}
-                title="Sign In"
+                title="Sign Up"
                 type="outline"
                 onPress={formikProps.handleSubmit}
               />

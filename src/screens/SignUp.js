@@ -6,6 +6,8 @@ import styles from "./styles";
 
 import SignUpForm from "../forms/SignUpForm";
 import { connect } from "react-redux";
+import {register} from "../api/user"
+import { actionSetToken } from "../redux/actions";
 
 class SignUp extends Component {
   state = {
@@ -20,7 +22,14 @@ class SignUp extends Component {
 
   _registerUser = async (email, password) => {
     console.log(`register user email: ${email} password: ${password}`)
-
+    try {
+      const token = await register(email, password)
+      await this.props.dispatch(actionSetToken(token));
+      this.props.navigation.navigate("UserProfile");
+    } catch (err) {
+      console.log(err);
+      this.setState({ isSubmiting: false, isError: true, err });
+    }
   };
 
   _onSubmitForm = values => {
@@ -43,7 +52,7 @@ class SignUp extends Component {
           )}
         </View>
         <TouchableHighlight onPress={() => this._gotoSignIn()}>
-          <Text style={styles.link}>Go to SignIn</Text>
+          <Text style={[styles.link, { marginBottom: 20 }]}>Go to SignIn</Text>
         </TouchableHighlight>
       </View>
     );
