@@ -41,6 +41,7 @@ export default class SignUpForm extends Component {
               style={styles.textInput}
               onChangeText={formikProps.handleChange("email")}
               onBlur={formikProps.handleBlur("email")}
+              keyboardType="email-address"
             />
             <Text style={styles.errorText}>
               {formikProps.touched.email && formikProps.errors.email}

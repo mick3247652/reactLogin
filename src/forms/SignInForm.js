@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TextInput, ActivityIndicator, Text, Keyboard } from "react-native";
+import {
+  View,
+  TextInput,
+  ActivityIndicator,
+  Text,
+  Keyboard,
+} from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -26,7 +32,7 @@ export default class SignInForm extends Component {
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, actions) => {
-          Keyboard.dismiss()
+          Keyboard.dismiss();
           this.props.onSubmit(values);
         }}
         validationSchema={validationSchema}
@@ -39,6 +45,7 @@ export default class SignInForm extends Component {
               style={styles.textInput}
               onChangeText={formikProps.handleChange("email")}
               onBlur={formikProps.handleBlur("email")}
+              keyboardType="email-address"
             />
             <Text style={styles.errorText}>
               {formikProps.touched.email && formikProps.errors.email}
