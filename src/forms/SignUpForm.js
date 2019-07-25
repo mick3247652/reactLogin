@@ -55,6 +55,7 @@ export default class SignUpForm extends Component {
               onChangeText={formikProps.handleChange("password")}
               onBlur={formikProps.handleBlur("password")}
               secureTextEntry
+              autoCapitalize = 'none'
             />
             <Text style={styles.errorText}>
               {formikProps.touched.password && formikProps.errors.password}
