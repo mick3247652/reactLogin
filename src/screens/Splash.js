@@ -6,6 +6,8 @@ import styles from "./styles";
 import { connect } from "react-redux";
 import SplashScreen from 'react-native-splash-screen';
 
+import {api_checkToken, checkToken} from '../api/user'
+
 class Splash extends Component {
   _navigateToSignIn = () => {
       console.log("navigate to SignIn")
@@ -21,13 +23,7 @@ class Splash extends Component {
     console.log(`splash screen token: ${this.props.token}`)
     if (!this.props.token) return this._navigateToSignIn();
     try {
-      await fetch("http://192.168.1.46:3001/api/checkToken", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": this.props.token,
-        },
-      });
+      checkToken(this.props.token)
       console.log("token is valid");
       this._navigateToUserProfile()
     } catch (err) {

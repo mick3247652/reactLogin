@@ -5,6 +5,8 @@
         android:drawable="@color/white"/>
 
     <item
+        android:width="256dp"
+        android:height="228dp"
         android:drawable="@drawable/splash"
         android:gravity="center" />
 

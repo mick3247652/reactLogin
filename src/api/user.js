@@ -1,4 +1,4 @@
-import { api_authenticate, api_register, api_getUserProfile } from "./config";
+import { api_authenticate, api_register, api_getUserProfile, api_checkToken } from "./config";
 
 export const authenticate = async (email, password) => {
   const response = await fetch(api_authenticate, {
@@ -42,3 +42,14 @@ export const getUserProfile = async token => {
   if (json.error) throw json.error;
   return json;
 };
+
+export const checkToken = async token => {
+  await fetch(api_checkToken, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+
+}
