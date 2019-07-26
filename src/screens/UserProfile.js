@@ -6,6 +6,7 @@ import styles from "./styles";
 import { connect } from "react-redux";
 import { actionSetToken, actionSetUserProfile } from "../redux/actions";
 import {getUserProfile} from '../api/user'
+import Profile from '../components/Profile1'
 
 class UserProfile extends Component {
   state = {
@@ -34,14 +35,9 @@ class UserProfile extends Component {
   render() {
     console.log("USER PROFILE")
     console.log(this.props.profile)
+    if(!this.props.profile) return(<View/>)
     return (
-      <View style={styles.container}>
-        <Text>User Profile Screen</Text>
-        
-         <TouchableHighlight onPress={() => this._logOut()}>
-          <Text style={styles.link}>Log out</Text>
-        </TouchableHighlight>
-      </View>
+      <Profile {...this.props.profile}/>
     );
   }
 }
@@ -49,7 +45,7 @@ class UserProfile extends Component {
 const mapStateToProps = state => {
   return {
     token: state.token,
-    profile: {...state.userProfile},
+    profile: {...state.userProfile.profile},
     
   };
 };
