@@ -2,12 +2,7 @@ import { ACTION_SET_TOKEN, ACTION_SET_USER_PROFILE } from "./actions";
 
 const InitialState = {
   token: "",
-  userProfile: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    created: "",
-  },
+  userProfile: {},
 };
 
 const reducer = (state = InitialState, action) => {
@@ -21,12 +16,7 @@ const reducer = (state = InitialState, action) => {
     case ACTION_SET_USER_PROFILE:
       return {
         ...state,
-        userProfile:{
-          firstName: action.profile.name.firstName,
-          lastName: action.profile.name.lastName,
-          email: action.profile.email,
-          created: action.profile.created,
-        }
+        userProfile: {...action.profile}
       };
 
     default:

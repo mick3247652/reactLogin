@@ -32,13 +32,12 @@ class UserProfile extends Component {
   }
 
   render() {
+    console.log("USER PROFILE")
+    console.log(this.props.profile)
     return (
       <View style={styles.container}>
         <Text>User Profile Screen</Text>
-        <Text>{this.props.email}</Text>
-        <Text>{this.props.firstName}</Text>
-        <Text>{this.props.lastName}</Text>
-        <Text>{this.props.created}</Text>
+        
          <TouchableHighlight onPress={() => this._logOut()}>
           <Text style={styles.link}>Log out</Text>
         </TouchableHighlight>
@@ -50,10 +49,8 @@ class UserProfile extends Component {
 const mapStateToProps = state => {
   return {
     token: state.token,
-    email: state.userProfile.email,
-    firstName: state.userProfile.firstName,
-    lastName: state.userProfile.lastName,
-    created: state.userProfile.created,
+    profile: {...state.userProfile},
+    
   };
 };
 
